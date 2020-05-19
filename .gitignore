@@ -30,3 +30,5 @@ override.tf.json
 
 # Python (PyCharm) Wrapper code
 /venv/
+PyCharm Config
+/.idea/.gitignore
