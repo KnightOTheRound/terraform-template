@@ -1,4 +1,4 @@
-# Infrastructure Bootstrap Template
+### Infrastructure Bootstrap Template
 A standardized starting point for projects that follow previous configurations I've set up.
 
 ##Todo
@@ -21,7 +21,7 @@ Gitignore will ignore override files as they are usually used to override resour
 ##Python
 Wrapper script using Python 3.8.2
 
-###Venv setup and Pip Packages
+#Venv setup and Pip Packages
 requests 2.23.0      /RESTful calls/
 terraform-bin 1.0.1  /Provisioning Stack/ 
 Markdown2pdf 0.1.4   /Producing Version-able Support Manual/
