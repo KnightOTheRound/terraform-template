@@ -4,16 +4,38 @@ import datetime
 import os
 import subprocess
 import sys
+import configparser
 
 import terraform
+# import ansible ?? maybe ??
+
+
+DEBUG_ENABLED = False
+DEFAULT_CONFIG = {
+                    'DEFAULT': {},
+                    'Providers': {'AWS': False, "Azure": False, "Google": False, "Local": True},
+                    'Applications': {
+                        'Serverless': "ContentServer,StateBasedWorkflow",
+                        'Server': "BasicLamp",
+                        'Container': "Python38DockerContainer"
+                    },
+                    'Application:ContentServer': {},
+                    'Application:StateBasedWorkflow': {},
+                    'Application:BasicLamp': {},
+                    'Application:Python38DockerContainer': {},
+                    'Security': {}
+                 }
 
 
 def build_stack(stack):
+    # TODO Build Stack Wrapper Mechanism
+    # TODO Generate Overrides from passed config
+    # TODO Build Stack with Terraform
+    # TODO Test Stack with Terraform
     return stack
 
 
 def build_documentation(name):
-    print(os.getcwd())
     if name == "documentation":
         mdfile_list = ["documentation/architecture.md"]
     elif name == "readme":
@@ -22,16 +44,11 @@ def build_documentation(name):
         mdfile_list = ["README.md"]
     else:
         mdfile_list = ["README.md"]
-    print(mdfile_list)
+    if DEBUG_ENABLED: print(mdfile_list)
     for mdfile in mdfile_list:
-        print(os.getcwd() + os.sep + mdfile)
-        # process = subprocess.run(["md2pdf", os.getcwd() + os.sep + mdfile], capture_output=True)
-        # m2pdf approach unpredictable results
-        # print(process.stdout)
-        # subprocess.run([sys.executable, "-m", "md2pdf", mdfile, "--theme=github"], capture_output=True)
-        # built-in themes with md2pdf github, solarized-dark, ghostwriter
-        # subprocess.run([sys.executable, "-m", "md2pdf", mdfile, "--theme=path_to_style.css"], capture_output=True)
-        # .stdout.decode('utf-8').split("\n")
+        print("\t\t" + os.getcwd() + os.sep + mdfile)
+        # TODO Generate HTML from Markdown
+        # TODO Generate PDF from HTML
     return True
 
 
@@ -44,11 +61,19 @@ if __name__ == '__main__':
     parser.add_argument("-c", "--config",  help="config file path",          type=str)
     parser.add_argument("name",            help="stack instance name",       type=str)
     args = parser.parse_args()
+    if args.debug:
+        DEBUG_ENABLED = True
+    if args.config is not None:
+        config = configparser.ConfigParser()
+        config.read(args.config)
+    else:
+        config = configparser.ConfigParser()
+        config.read_dict(DEFAULT_CONFIG)
     # Output Runtime Settings
     print("OS:                    " + os.name)
     print("CWD:                   " + os.getcwd())
     print("Python:                " + sys.version)
-    if args.debug:
+    if DEBUG_ENABLED:
         print("  Installed Modules:")
         modules = subprocess.run([sys.executable, "-m", "pip", "freeze"], capture_output=True).stdout.\
             decode('utf-8').split("\n")
@@ -56,7 +81,7 @@ if __name__ == '__main__':
             print("                       " + module)
     print("Terraform:             " + terraform.TERRAFORM_EXECUTABLE)
     print("Terraform platform:    " + terraform.PLATFORM)
-    if args.debug:
+    if DEBUG_ENABLED:
         print("Environment Variables: ")
         for env in os.environ:
             print("                       " + env + " : " + str(os.environ[env]))
