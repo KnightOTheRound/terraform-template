@@ -2,6 +2,7 @@
 A standardized starting point for projects that follow previous configurations I've set up.
 
 ##Todo
+
 - AWS Serverless WebServer (AutismShapes Generator, API with Web Interface)
 - AWS App Server (e.g. RTMP Server, Foundry VTT, Rocket.Chat)
 - AWS Serverless Stack Application (Conference Registration System)
@@ -9,6 +10,7 @@ A standardized starting point for projects that follow previous configurations I
 - Azure and gCloud Wrappers
 
 ##Terraform
+
 "Property overriding" done through co-located override file. Procedural generation of these files with executions of 
 terraform for sequences of stacks.
 
@@ -19,9 +21,10 @@ Gitignore will ignore override files as they are usually used to override resour
     *_override.tf.json
 
 ##Python
+
 Wrapper script using Python 3.8.2
 
 ###Venv setup and Pip Packages
+
 requests 2.23.0      /RESTful calls/
 terraform-bin 1.0.1  /Provisioning Stack/ 
-Markdown2pdf 0.1.4   /Producing Version-able Support Manual/
