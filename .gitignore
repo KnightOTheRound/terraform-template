@@ -32,4 +32,10 @@ override.tf.json
 /venv/
 PyCharm Config
 /.idea/.gitignore
+
+# Local file repository for terraform, likely will also enable some form of bin repo
 /files/*.zip
+
+# Non sample Config Files
+/config/*.config
+!/config/sample.config
